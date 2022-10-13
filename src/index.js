@@ -12,6 +12,9 @@ const app = express();
 
 app.use(bodyParser.json());
 app.use('/tickets',ticketsRoutes)
+app.get('/',(req,res) =>{
+  res.send('Hello')
+})
 
 app.listen(PORT, () => {
   console.log(`listening on port ${PORT}`);
