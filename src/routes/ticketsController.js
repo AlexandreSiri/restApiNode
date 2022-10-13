@@ -6,55 +6,6 @@ const {TicketsModel} = require('../models/tickets.model')
 
 global.keyTicket = ''
 
-const checkCode = (ticketCode) =>{
-    if (keyTicket.length > 2){
-        const lengthKey = keyTicket.length
-        const check = ticketCode.substring(0,lengthKey)
-
-        if (check === keyTicket){
-            const ticket = TicketsModel.findOne({
-                TicketID: `#${ticketCode}`,
-                TicketStatus: "Checked In",
-            },(err, doc) =>{
-                console.log('OK ' +doc)
-                if (err) console.log(err)
-                if (doc == null){
-                    console.log('o')
-                    TicketsModel.create(
-                        {    
-                            TicketID: `#${ticketCode}`,
-                            TicketIDNumeric: parseInt(`${ticketCode}`),
-                            OrderID: -1,
-                            AttendeeFirstName: "",
-                            AttendeeLastName: "",
-                            AttendeeEmail: "",
-                            TicketStatus:  "Checked In",
-                            TicketType: "Billeterie",
-                            Variation: "",
-                            PurchaserFirstName: "",
-                            PurchaserLastName: "",
-                            PurchaserEmail: "",
-                            OrderStatus: "Completed",
-                            PaymentMethod: "systempaystd",
-                            OrderDate: Date.now(),
-                            SeatRowName: "",
-                            SeatNumber: "",
-                            CheckIn: `${Date.now()}`
-                        }
-                    )
-                    console.log('k')
-                    return 200
-                }
-                else return 403
-            })
-
-        }
-        return 30
-        }else{
-            return 30
-        }
-}
-
 router.post('/key/:keyTicket',(req,res) =>{
     keyTicket = req.params.keyTicket
     console.log(keyTicket)
