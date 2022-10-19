@@ -1,10 +1,15 @@
 const express = require('express')
 const { send } = require('express/lib/response')
+const { default: mongoose } = require('mongoose')
 const router = express.Router()
 
 const {TicketsModel} = require('../models/tickets.model')
 
 global.keyTicket = ''
+
+router.get('/collections', (req,res) =>{
+    res.send(allCollections)
+})
 
 router.post('/key/:keyTicket',(req,res) =>{
     keyTicket = req.params.keyTicket
@@ -16,17 +21,13 @@ router.get('/:code',(req,res) =>{
     if (keyTicket.length > 2){
         const lengthKey = keyTicket.length
         const check = req.params.code.substring(0,lengthKey)
-        console.log(check === keyTicket)
-
         if (check === keyTicket){
             const ticket = TicketsModel.findOne({
                 TicketID: `#${req.params.code}`,
                 TicketStatus: "Checked In",
             },(err, doc) =>{
-                console.log('OK ' +doc)
                 if (err) console.log(err)
                 if (doc == null){
-                    console.log('o')
                     TicketsModel.create(
                         {    
                             TicketID: `#${req.params.code}`,
@@ -49,7 +50,6 @@ router.get('/:code',(req,res) =>{
                             CheckIn: `${Date.now()}`
                         }
                     )
-                    console.log('k')
                     return res.status(200).send()
                 }
                 else return res.status(403).send()
@@ -72,12 +72,14 @@ router.get('/:code',(req,res) =>{
         {new: true},
         (err, doc) =>{
             if (err) console.log("Une erreur s'est produite")
-            if (doc !== null) {console.log(doc);console.log('ouiii'); return res.status(200).send(); console.log('nooooon');}
+            if (doc !== null) {console.log(doc);console.log('ouiii'); return res.status(200).send();}
             else return res.status(403).send()
         }
     )
     }
 })
+
+
 
 
 module.exports = router
