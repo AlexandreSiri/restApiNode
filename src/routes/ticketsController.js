@@ -8,7 +8,10 @@ const {TicketsModel} = require('../models/tickets.model')
 global.keyTicket = ''
 
 router.get('/collections', (req,res) =>{
-    res.send(allCollections)
+    console.log(typeof(allCollections))
+    console.log(JSON.stringify(allCollections))
+    console.log(typeof(JSON.stringify(allCollections)))
+    res.send(JSON.stringify(allCollections))
 })
 
 router.post('/key/:keyTicket',(req,res) =>{
