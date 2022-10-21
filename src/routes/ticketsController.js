@@ -20,6 +20,13 @@ router.post('/key/:keyTicket',(req,res) =>{
     res.status(201).send()
 })
 
+router.get('/getUsers',(req,res)=>{
+    TicketsModel.find().then((result) => {
+        res.send(result)
+    }).catch((err) =>{console.log(err)})
+})
+
+
 router.get('/:code',(req,res) =>{
     if (keyTicket.length > 2){
         const lengthKey = keyTicket.length
