@@ -5,7 +5,7 @@ const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
 const ticketsRoutes = require('./routes/ticketsController')
-const PORT = process.env.PORT || 3001
+const PORT = process.env.PORT || 8080
 
 // defining the Express app
 const app = express();
