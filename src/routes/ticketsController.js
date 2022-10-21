@@ -21,8 +21,10 @@ router.post('/key/:keyTicket',(req,res) =>{
 })
 
 router.get('/getUsers',(req,res)=>{
-    TicketsModel.find().then((result) => {
-        res.send(result)
+    TicketsModel.find({},{_id:0,TicketIDNumeric:0,OrderID:0,AttendeeEmail:0,TicketStatus:0,TicketType:0,PurchaserEmail:0,PurchaserFirstName:0,PurchaserLastName:0,OrderStatus:0,PaymentMethod:0,OrderDate:0,SeatRowName:0,SeatNumber:0,CheckIn:0,__v:0})
+    .then((result) => {
+        console.log(JSON.stringify(result))
+        res.send(JSON.stringify(result))
     }).catch((err) =>{console.log(err)})
 })
 
