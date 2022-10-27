@@ -21,7 +21,7 @@ router.post('/key/:keyTicket',(req,res) =>{
 })
 
 router.get('/getUsers',(req,res)=>{
-    TicketsModel.find({},{_id:0,TicketIDNumeric:0,OrderID:0,AttendeeEmail:0,TicketStatus:0,TicketType:0,PurchaserEmail:0,PurchaserFirstName:0,PurchaserLastName:0,OrderStatus:0,PaymentMethod:0,OrderDate:0,SeatRowName:0,SeatNumber:0,CheckIn:0,__v:0})
+    TicketsModel.find({},{_id:0,TicketIDNumeric:0,OrderID:0,AttendeeEmail:0,TicketType:0,PurchaserEmail:0,PurchaserFirstName:0,PurchaserLastName:0,OrderStatus:0,PaymentMethod:0,OrderDate:0,SeatRowName:0,SeatNumber:0,CheckIn:0,__v:0})
     .then((result) => {
         console.log(JSON.stringify(result))
         res.send(JSON.stringify(result))
@@ -91,6 +91,46 @@ router.get('/:code',(req,res) =>{
     }
 })
 
+router.post('/changeState/:id',(req,res) => {
+    console.log(req.params.id)
+    TicketsModel.findOneAndUpdate
+    (
+        {
+            TicketID: `#${req.params.id}`,
+            TicketStatus: "Not Checked In"
+        },
+        {
+            TicketID: `#${req.params.id}`,
+            TicketStatus: "Checked In",
+            CheckIn: `${Date.now()}`
+        },
+        {new: true},
+        (err, doc) =>{
+            if (err) console.log("Une erreur s'est produite")
+            if (doc !== null) {console.log(doc);console.log('ouiii'); return res.status(200).send();}
+            else return res.status(403).send()
+        }
+    )
+    TicketsModel.findOneAndUpdate
+    (
+        {
+            TicketID: `#${req.params.id}`,
+            TicketStatus: "Checked In"
+        },
+        {
+            TicketID: `#${req.params.id}`,
+            TicketStatus: "Not Checked In",
+            CheckIn: `${Date.now()}`
+        },
+        {new: true},
+        (err, doc) =>{
+            if (err) console.log("Une erreur s'est produite")
+            if (doc !== null) {console.log(doc);console.log('ouiii'); return res.status(200).send();}
+            else return res.status(403).send()
+        }
+    )
+    
+})
 
 
 
