@@ -9,7 +9,7 @@ const PORT = process.env.PORT || 8080
 
 // defining the Express app
 const app = express();
-
+global.collection = ""
 app.use(bodyParser.json());
 app.use('/tickets',ticketsRoutes)
 app.get('/',(req,res) =>{

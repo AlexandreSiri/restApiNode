@@ -6,12 +6,13 @@ const router = express.Router()
 const {TicketsModel} = require('../models/tickets.model')
 
 global.keyTicket = ''
+global.collection = ""
 
-router.get('/collections', (req,res) =>{
-    console.log(typeof(allCollections))
-    console.log(JSON.stringify(allCollections))
-    console.log(typeof(JSON.stringify(allCollections)))
-    res.send(JSON.stringify(allCollections))
+
+router.post('/collections/:id', (req,res) =>{
+    collection = req.params.id
+    console.log(req.params.id)
+    res.status(201).send();
 })
 
 router.post('/key/:keyTicket',(req,res) =>{
@@ -84,11 +85,25 @@ router.get('/:code',(req,res) =>{
         {new: true},
         (err, doc) =>{
             if (err) console.log("Une erreur s'est produite")
-            if (doc !== null) {console.log(doc);console.log('ouiii'); return res.status(200).send();}
+            if (doc !== null) {console.log(doc); return res.status(200).send();}
             else return res.status(403).send()
         }
     )
     }
+})
+
+router.get('/verif/:code', (req,res) =>{
+    TicketsModel.findOne
+    (
+        {
+            TicketID: `#${req.params.code}`,
+            TicketStatus: 'Checked In'
+    },
+    (err, doc) =>{
+        if (err) console.log("Une erreur s'est produite")
+        if (doc !== null) {console.log(doc);return res.status(204).send()}
+        else return res.status(200).send()
+    })
 })
 
 router.post('/changeState/:id',(req,res) => {

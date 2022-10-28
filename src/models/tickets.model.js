@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
+const {collection} = require('../routes/ticketsController')
 
 const TicketsModel = mongoose.model(
-   "testo",
+   "angers",
    {
       TicketID: {type: String,Required: true},
       TicketIDNumeric: {type: Number, Required: true},
@@ -22,7 +23,8 @@ const TicketsModel = mongoose.model(
       SeatNumber: {type: String, Required: true},
       CheckIn:{type: String, Required: true}
    },
-   "evenementvincennes"
+   collection
+   
 )
 
 module.exports = {TicketsModel};
