@@ -1,9 +1,6 @@
 const mongoose = require('mongoose');
-const {collection} = require('../routes/ticketsController')
 
-const TicketsModel = mongoose.model(
-   "angers",
-   {
+const TicketsModel = new mongoose.Schema({
       TicketID: {type: String,Required: true},
       TicketIDNumeric: {type: Number, Required: true},
       OrderID: {type: Number, Required: true},
@@ -22,9 +19,7 @@ const TicketsModel = mongoose.model(
       SeatRowName: {type: String, Required: true},
       SeatNumber: {type: String, Required: true},
       CheckIn:{type: String, Required: true}
-   },
-   collection
-   
+   },{collection: 'angers04-11-2022'}
 )
 
 module.exports = {TicketsModel};

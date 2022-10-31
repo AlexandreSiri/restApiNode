@@ -1,9 +1,7 @@
 const express = require('express');
 require('./models/dbConfig')
 const bodyParser = require('body-parser');
-const cors = require('cors');
 const helmet = require('helmet');
-const morgan = require('morgan');
 const ticketsRoutes = require('./routes/ticketsController')
 const PORT = process.env.PORT || 8080
 
